@@ -4,12 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <title>Form Page</title>
+    <script>
+      window.onload = function () {
+        // Get status and message from the server-rendered variables
+        const status = "<%= status || 'fail' %>";
+        const message = "<%= message || 'Welcome, something is wrong' %>";
+
+        // Show alert with status and message
+        alert(`Status: ${status}\nMessage: ${message}`);
+
+        // Log submitted data to the browser console if it exists
+        const submittedData = <%- JSON.stringify(submittedData || {}) %>;
+        console.log("Submitted Data:", submittedData);
+      };
+    </script>
   </head>
   <body>
     <!-- Write the code for the form -->
-    <h1>Status : <%=status || "fail" %></h1>
-    <h1>Message : <%=message || "Welcome, something is wrong" %></h1>
+    <div class="form-container">
+      <div class="form">
+        <form method="POST" action="/submit">
+          <div class="text"><h3>Simple HTML FORM</h3></div>
+          <label for="name">Name</label>
+          <input
+            type="text"
+            placeholder="Judy Jane"
+            id="name"
+            name="name"
+            required
+          />
+
+          <label for="email">Email</label>
+          <input
+            type="email"
+            placeholder="judyjane@gmail.com"
+            id="email"
+            name="email"
+            required
+          />
+
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            placeholder="Thank you for checking ....."
+            name="message"
+            rows="5"
+            cols="5"
+            required
+          ></textarea>
+
+          <div class="button">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>
