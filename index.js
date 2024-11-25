@@ -35,27 +35,10 @@ app.get("/", (req, res, next) => {
 });
 
 // Handle form submission
-app.post("/submit", (req, res) => {
-  const { name, email, message } = req.body;
-  console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);
 
-  // sending a success response back.
-  res.render("form", {
-    status: "success",
-    message: "Thank you for your submission!",
-    submittedData: { name, email, message }, // Passing the submitted data
-  });
-});
+// sending a success response back.
 
 // Error handling
-app.use((error, req, res, next) => {
-  console.error("An error occurred while processing the request:", error);
-  res.status(500).render("form", {
-    status: "fail",
-    message: "There was an error processing your request. Please try again.",
-    submittedData: null,
-  });
-});
 
 // Defined user route
 app.use("/api/v1/user", userRoute);
