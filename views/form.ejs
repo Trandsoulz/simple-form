@@ -23,16 +23,8 @@
       };
 
       // Log submitted data to the browser console if it exists
-      const submittedDataStr =
-        `<%= JSON.stringify(submittedData) || {} %>`.trim();
-      let decodedStr = submittedDataStr
-        .replace(/&quot;/g, '"')
-        .replace(/&#34;/g, "'");
-      const submittedData = JSON.parse(decodedStr);
-      // if (Object.keys(submittedData).length !== 0) {
-      // Only log if there is data
+      const submittedData = '<%- JSON.stringify(submittedData || {}) %>';
       console.log("Submitted Data:", submittedData);
-      // }
     </script>
   </head>
   <body>
