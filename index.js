@@ -35,10 +35,37 @@ app.get("/", (req, res, next) => {
 });
 
 // Handle form submission
+app.post("/submit", (req, res) => {
+  const { name, email, message } = req.body;  
 
-// sending a success response back.
+  // Check if all fields are filled  
+  if (!name || !email || !message) {  
+    return res.status(400).render("form", {  
+      status: "fail",  
+      message: "Please fill in all fields.",  
+      submittedData: null, 
+    });  
+  }  
+
+  console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);  
+
+  // sending a success response back.
+  res.render("form", {
+    status: "success",
+    message: "Thank you for your submission!",
+    submittedData: { name, email, message }, // Passing the submitted data
+  });
+});
 
 // Error handling
+app.use((error, req, res, next) => {
+  console.error("An error occurred while processing the request:", error);
+  res.status(500).render("form", {
+    status: "fail",
+    message: "There was an error processing your request. Please try again.",
+    submittedData: null,
+  });
+});
 
 // Defined user route
 app.use("/api/v1/user", userRoute);
@@ -57,31 +84,3 @@ app.listen(PORT, () => {
     `Running on ${NODE_ENV} environment on http://localhost:${PORT ?? 3000}`
   );
 });
-
-
-app.post('/submit', (req, res) => {
-  const {name, email, message} = req.body;
-  console.log(`Name: ${name}, Email: ${email}, message: ${message}`);
-
-
-  // Success Message
-res.render('form', {
-  status: 'success',
-  message: 'This form is submitteed successfully',
-  submittedData: {name, email, message}
-
-});
-});
-
-// If error Occurr
-app.use((err, req, res) => {
-  console.error("An error occurred while processing the request", err);
-  res.status(500).return("form", {
-    status: "fail",
-    message: "There was an error processing your request Please try again",
-    submittedData: null,
-  });
-});
-
-// Defined user route
-app.use("/api/v1/user", userRoute);

@@ -13,15 +13,20 @@
 
     <title>Form Page</title>
     <script>
-      window.onload = function () {
-        // Get status and message from the server-rendered variables
-        const status = "<%= status || 'fail' %>";
-        const message = "<%= message || 'Welcome, something is wrong' %>";
+        window.onload = function () {
+          // Get status and message from the server-rendered variables
+          const status = "<%= status || 'fail' %>";
+          const message = "<%= message || 'Welcome, something is wrong' %>";
 
-        // Show alert with status and message
-        alert(`Status: ${status}\nMessage: ${message}`);
+          // Show alert with status and message
+          alert(`Status: ${status}\nMessage: ${message}`);
 
-        // Log submitted data to the browser console if it exists
+           // Log submitted data to the browser console if it exists
+          const submittedData = <%- JSON.stringify(submittedData || {}) %>;
+          if (Object.keys(submittedData).length !== 0) { // Only log if there is data
+          console.log("Submitted Data:", submittedData);
+        }
+      };
     </script>
   </head>
   <body>
