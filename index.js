@@ -36,24 +36,24 @@ app.get("/", (req, res, next) => {
 
 // Handle form submission
 app.post("/submit", (req, res) => {
-  const { name, email, message } = req.body;  
+  const { name, email, message } = req.body;
 
-  // Check if all fields are filled  
-  if (!name || !email || !message) {  
-    return res.status(400).render("form", {  
-      status: "fail",  
-      message: "Please fill in all fields.",  
-      submittedData: null, 
-    });  
-  }  
+  // Check if all fields are filled
+  if (!name || !email || !message) {
+    return res.status(400).render("form", {
+      status: "fail",
+      message: "Please fill in all fields.",
+      submittedData: null,
+    });
+  }
 
-  console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);  
+  console.log(`Name: ${name}, Email: ${email}, Message: ${message}`);
 
   // sending a success response back.
   res.render("form", {
     status: "success",
     message: "Thank you for your submission!",
-    submittedData: { name, email, message }, // Passing the submitted data
+    submittedData: req.body, // Passing the submitted data
   });
 });
 
