@@ -57,3 +57,31 @@ app.listen(PORT, () => {
     `Running on ${NODE_ENV} environment on http://localhost:${PORT ?? 3000}`
   );
 });
+
+
+app.post('/submit', (req, res) => {
+  const {name, email, message} = req.body;
+  console.log(`Name: ${name}, Email: ${email}, message: ${message}`);
+
+
+  // Success Message
+res.render('form', {
+  status: 'success',
+  message: 'This form is submitteed successfully',
+  submittedData: {name, email, message}
+
+});
+});
+
+// If error Occurr
+app.use((err, req, res) => {
+  console.error("An error occurred while processing the request", err);
+  res.status(500).return("form", {
+    status: "fail",
+    message: "There was an error processing your request Please try again",
+    submittedData: null,
+  });
+});
+
+// Defined user route
+app.use("/api/v1/user", userRoute);
